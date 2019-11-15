@@ -1,14 +1,12 @@
 /**
- * Un Etudiant. Il hérite d'Adherent, et à un numéro d'étudiant et une méthode inscrire() différente
+ * Un SansEmploi. Il hérite d'Adherent et une méthode inscrire() différente
  * @author Bastien Malhere
  * @version 1.0
  * @since 1.0
  * @see Adherent
  * @see Adresse
  */
-public class Etudiant extends Adherent {
-
-    private int numeroEtudiant;
+public class SansEmploi extends Adherent {
 
     /**
      * On crée un salarié avec un nombre d'emprunt et un salaire brut
@@ -17,11 +15,9 @@ public class Etudiant extends Adherent {
      * @param adresse Adresse du salarié
      * @param telephone Téléphone du salarié
      * @param nombreEmprunts Nombres d'emprunts à la création du Salarié
-     * @param numeroEtudiant Le numéro d'étudiant de l'Etudiant
      */
-    public Etudiant(String nom, String prenom, Adresse adresse, String telephone, int nombreEmprunts, int numeroEtudiant) {
+    public SansEmploi(String nom, String prenom, Adresse adresse, String telephone, int nombreEmprunts) {
         super(nom, prenom, adresse, telephone, nombreEmprunts);
-        this.numeroEtudiant = numeroEtudiant;
     }
 
     /**
@@ -30,22 +26,20 @@ public class Etudiant extends Adherent {
      * @param prenom Prénom du salarié
      * @param adresse Adresse du salarié
      * @param telephone Téléphone du salarié
-     * @param numeroEtudiant Le numéro d'étudiant de l'Etudiant
      */
-    public Etudiant(String nom, String prenom, Adresse adresse, String telephone, int numeroEtudiant) {
+    public SansEmploi(String nom, String prenom, Adresse adresse, String telephone) {
         super(nom, prenom, adresse, telephone);
-        this.numeroEtudiant = numeroEtudiant;
     }
 
     /**
-     * Inscrit un Etudiant à la bibliothèque.
-     * @return true si l'étudiant n'est pas déjà inscrit.
+     * Inscrit un SansEmploi à la bibliothèque.
+     * @return true si le sans emploi n'est pas déjà inscrit.
      */
     @Override
     public boolean inscrire() {
         // Pas encore implémenté correctement, du au manque de stockage des données de la bilbiothèque
         //TODO Implementer pour la version 2.0, avec un stockage de la Bibliothèque.
-        System.out.println("Étudiant numéro : " + this.numeroEtudiant + " inscrit.");
+        System.out.println("Nouveau sans emploi inscrit");
         return true;
     }
 }

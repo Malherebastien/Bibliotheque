@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 
 /**
- * La classe représentant un adhérent de la bibliothèque
+ * La classe représentant un adhérent de la bibliothèque. Elle est abstraite, car on ne veux pas qu'elle soit instanciable.
  * @author Bastien Malhere
  * @version 1.0
  * @since 1.0
  * @see Adresse
  * @see Livre
  */
-public class Adherent {
+public abstract class Adherent {
     private static int nbrAdherent;
     /* En mettant cet attribut en static, il est partagé par toute les instances de la classe Adherent.
     Si un adhérent est supprimé, son numéro ne sera jamais réattribué. On considère qu'il n'y aura pas plus de 2^32 adhérents.
@@ -94,6 +94,11 @@ public class Adherent {
         }
         return false;
     }
+
+    /*
+    On redéfinit cette méthode dans chaque classe enfant.
+     */
+    public abstract boolean inscrire();
 
     public int getRefAdherent() {
         return refAdherent;
