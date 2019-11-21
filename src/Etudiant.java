@@ -1,12 +1,13 @@
 /**
  * Un Etudiant. Il hérite d'Adherent, et à un numéro d'étudiant et une méthode inscrire() différente
  * @author Bastien Malhere
- * @version 1.0
+ * @version 2.0
  * @since 1.0
  * @see Adherent
  * @see Adresse
  */
-public class Etudiant extends Adherent {
+public class Etudiant extends Adherent implements Personne {
+    private final int MONTANT_COT = 20;
 
     private int numeroEtudiant;
 
@@ -47,5 +48,11 @@ public class Etudiant extends Adherent {
         //TODO Implementer pour la version 2.0, avec un stockage de la Bibliothèque.
         System.out.println("Étudiant numéro : " + this.numeroEtudiant + " inscrit.");
         return true;
+    }
+
+    @Override
+    public int calculerCot() {
+        System.out.println("La cotisation d'un etudiant est de " + this.MONTANT_COT + " €.");
+        return this.MONTANT_COT;
     }
 }

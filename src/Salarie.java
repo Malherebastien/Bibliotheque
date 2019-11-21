@@ -1,12 +1,13 @@
 /**
  * Un Salarié. Il hérite d'Adherent, et à un salaire brut et une méthode inscrire() différente
  * @author Bastien Malhere
- * @version 1.0
+ * @version 2.0
  * @since 1.0
  * @see Adherent
  * @see Adresse
  */
-public class Salarie extends Adherent {
+public class Salarie extends Adherent implements Personne{
+    private final int MONTANT_COT = 30;
 
     private int salaireBrut;
 
@@ -48,5 +49,11 @@ public class Salarie extends Adherent {
         //TODO Determiner le prix d'inscription en fonction du salaire brut
         System.out.println("Le salarié avec un salaire de : " + this.salaireBrut + " est bien inscrit");
         return true;
+    }
+
+    @Override
+    public int calculerCot() {
+        System.out.println("La cotisation d'un salarié est de " + this.MONTANT_COT + " €.");
+        return this.MONTANT_COT;
     }
 }

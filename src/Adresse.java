@@ -1,7 +1,7 @@
 /**
  * La classe représentant une adresse. On considère que l'adresse est une adresse française.
  * @author Bastien Malhere
- * @version 1.0
+ * @version 2.0
  * @since 1.0
  */
 public class Adresse {

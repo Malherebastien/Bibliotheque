@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * La classe représentant un adhérent de la bibliothèque. Elle est abstraite, car on ne veux pas qu'elle soit instanciable.
  * @author Bastien Malhere
- * @version 1.0
+ * @version 2.0
  * @since 1.0
  * @see Adresse
  * @see Livre
