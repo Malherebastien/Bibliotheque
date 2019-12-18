@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 /**
  * La classe représentant un adhérent de la bibliothèque. Elle est abstraite, car on ne veux pas qu'elle soit instanciable.
- * @author Bastien Malhere
- * @version 2.0
+ * @author Bastien Malhere, Gabin Pruvost-Couvreur
+ * @version 3.0
  * @since 1.0
  * @see Adresse
  * @see Livre
@@ -59,47 +59,6 @@ public abstract class Adherent {
         this.livresEmpruntes = new ArrayList<>();
     }
 
-    /**
-     * Permet à l'adherent d'emprunter un livre. Echoue si le livre est déjà emprunté
-     * Passe le paramètre estDisponible à false, et emprunteur deviens l'adherent.
-     * Ajoute le livre à la livresEmpruntes, et incrémente nombreEmprunts.
-     * @param livre Le livre à emprunter
-     * @return true si le livre était disponible, false sinon.
-     */
-    public boolean emprunte(Livre livre) {
-        if (livre.isEstDisponible()) {
-            livre.setEstDisponible(false);
-            livre.setEmprunteur(this);
-            this.livresEmpruntes.add(livre);
-            this.nombreEmprunts++;
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Permet à l'adherent de rendre un livre. Echoue si l'adherent n'a pas le livre dans ses livres empruntés.
-     * Passe le paramètre estDisponible à true, et emprunteur deviens null.
-     * Retire le livre de livresEmpruntes, et décrémente nombreEmprunts.
-     * @param livre Le livre à rendre
-     * @return true si le livre était dans les emprunt de l'adherent, false sinon.
-     */
-    public boolean rend(Livre livre) {
-        if (this.livresEmpruntes.contains(livre)) {
-            livre.setEmprunteur(null);
-            livre.setEstDisponible(true);
-            this.livresEmpruntes.remove(livre);
-            this.nombreEmprunts--;
-            return true;
-        }
-        return false;
-    }
-
-    /*
-    On redéfinit cette méthode dans chaque classe enfant.
-     */
-    public abstract boolean inscrire();
-
     public int getRefAdherent() {
         return refAdherent;
     }
@@ -149,5 +108,13 @@ public abstract class Adherent {
 
     public void setNombreEmprunts(int nombreEmprunts) {
         this.nombreEmprunts = nombreEmprunts;
+    }
+
+    public ArrayList<Livre> getLivresEmpruntes() {
+        return livresEmpruntes;
+    }
+
+    public void setLivresEmpruntes(ArrayList<Livre> livresEmpruntes) {
+        this.livresEmpruntes = livresEmpruntes;
     }
 }

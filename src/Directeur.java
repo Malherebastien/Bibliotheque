@@ -1,7 +1,7 @@
 /**
- * @author Bastien Malhere
- * @version 2.0
- * @since 2.0
+ * @author Bastien Malhere, Gabin Pruvost-Couvreur
+ * @version 3.0
+ * @since 3.0
  */
 public class Directeur extends Personnel {
 

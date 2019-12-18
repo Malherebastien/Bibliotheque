@@ -30,16 +30,4 @@ public class SansEmploi extends Adherent {
     public SansEmploi(String nom, String prenom, Adresse adresse, String telephone) {
         super(nom, prenom, adresse, telephone);
     }
-
-    /**
-     * Inscrit un SansEmploi à la bibliothèque.
-     * @return true si le sans emploi n'est pas déjà inscrit.
-     */
-    @Override
-    public boolean inscrire() {
-        // Pas encore implémenté correctement, du au manque de stockage des données de la bilbiothèque
-        //TODO Implementer pour la version 2.0, avec un stockage de la Bibliothèque.
-        System.out.println("Nouveau sans emploi inscrit");
-        return true;
-    }
 }

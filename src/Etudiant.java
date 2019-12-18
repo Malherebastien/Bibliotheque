@@ -1,7 +1,7 @@
 /**
  * Un Etudiant. Il hérite d'Adherent, et à un numéro d'étudiant et une méthode inscrire() différente
- * @author Bastien Malhere
- * @version 2.0
+ * @author Bastien Malhere, Gabin Pruvost-Couvreur
+ * @version 3.0
  * @since 1.0
  * @see Adherent
  * @see Adresse
@@ -38,21 +38,17 @@ public class Etudiant extends Adherent implements Personne {
         this.numeroEtudiant = numeroEtudiant;
     }
 
-    /**
-     * Inscrit un Etudiant à la bibliothèque.
-     * @return true si l'étudiant n'est pas déjà inscrit.
-     */
-    @Override
-    public boolean inscrire() {
-        // Pas encore implémenté correctement, du au manque de stockage des données de la bilbiothèque
-        //TODO Implementer pour la version 2.0, avec un stockage de la Bibliothèque.
-        System.out.println("Étudiant numéro : " + this.numeroEtudiant + " inscrit.");
-        return true;
-    }
-
     @Override
     public int calculerCot() {
         System.out.println("La cotisation d'un etudiant est de " + this.MONTANT_COT + " €.");
         return this.MONTANT_COT;
+    }
+
+    public int getNumeroEtudiant() {
+        return numeroEtudiant;
+    }
+
+    public void setNumeroEtudiant(int numeroEtudiant) {
+        this.numeroEtudiant = numeroEtudiant;
     }
 }

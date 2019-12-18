@@ -13,7 +13,7 @@ public class Livre {
     Si un livre sors du stock, son numéro ne sera jamais réattribué. On considère qu'il n'y aura pas plus de 2^31 - 1 livres.
     */
 
-    private int refLivre;
+    private String refLivre;
     private String titre;
     private ArrayList<Auteur> auteurs;
     private String editeur;
@@ -30,7 +30,7 @@ public class Livre {
      */
     public Livre(String titre, ArrayList<Auteur> auteurs, String editeur, int anneeEdition) {
         Livre.nbrLivre++;
-        this.refLivre = nbrLivre;
+        this.refLivre = "L" + nbrLivre;
         this.titre = titre;
         this.auteurs = auteurs;
         this.editeur = editeur;
@@ -47,7 +47,7 @@ public class Livre {
      */
     public Livre(String titre, Auteur auteur, String editeur, int anneeEdition) {
         Livre.nbrLivre++;
-        this.refLivre = nbrLivre;
+        this.refLivre = "L" + nbrLivre;
         this.titre = titre;
         this.auteurs = new ArrayList<>();
         this.auteurs.add(auteur);
@@ -56,16 +56,14 @@ public class Livre {
         this.estDisponible = true;
     }
 
-    public int getRefLivre() {
-        return refLivre;
-    }
-
     /*
     Le mutateur est 'private' car il ne doit pas être modifié. Il ne faut pas que 2 livres ai la même référence.
      */
-    private void setRefLivre(int refLivre) {
+    private void setRefLivre(String refLivre) {
         this.refLivre = refLivre;
     }
+
+    public String getRefLivre(){return this.refLivre;}
 
     public String getTitre() {
         return titre;

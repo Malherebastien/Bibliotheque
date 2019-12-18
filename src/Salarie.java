@@ -38,19 +38,6 @@ public class Salarie extends Adherent implements Personne{
         this.salaireBrut = salaireBrut;
     }
 
-    /**
-     * Inscrit un Salarié à la bibliothèque.
-     * @return true si le salarié n'est pas déjà inscrit.
-     */
-    @Override
-    public boolean inscrire() {
-        // Pas encore implémenté correctement, du au manque de stockage des données de la bilbiothèque
-        //TODO Implementer pour la version 2.0, avec un stockage de la Bibliothèque.
-        //TODO Determiner le prix d'inscription en fonction du salaire brut
-        System.out.println("Le salarié avec un salaire de : " + this.salaireBrut + " est bien inscrit");
-        return true;
-    }
-
     @Override
     public int calculerCot() {
         System.out.println("La cotisation d'un salarié est de " + this.MONTANT_COT + " €.");

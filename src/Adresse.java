@@ -43,6 +43,14 @@ public class Adresse {
         this.codePostal = codePostal;
     }
 
+    public Adresse(){
+        this.rue = "";
+        this.numDeRue = 0;
+        this.etage = 0;
+        this.ville = "";
+        this.codePostal = 0;
+    }
+
     public String getRue() {
         return rue;
     }
