@@ -72,7 +72,7 @@ public class Controller extends Observable {
             if((!titre.equals("") && !titre.equals(l.getTitre())) ||
                     (!auteur.equals("") && !auteur.equals(l.getAuteurs().get(0).getNom())) ||
                     (!editeur.equals("") && !editeur.equals(l.getEditeur())) ||
-                    (!anneEdition.equals("") && !anneEdition.equals(l.getAnneeEdition()))){
+                    (!anneEdition.equals("") && !anneEdition.equals(l.getAnneeEdition()+""))){
                 continue;
             } else {
                 alLivresTrouve.add(l);

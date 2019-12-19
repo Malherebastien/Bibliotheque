@@ -189,68 +189,79 @@ public class View {
                 jlTop.setFont(new Font("Arial", Font.BOLD, 12));
                 pIns_1.add(jlTop);
             }
-            JPanel pIns_2 = new JPanel(new GridLayout(10, 2));{
-                JPanel pIns_2_0_1 = new JPanel(new BorderLayout());{
-                    pIns_2_0_1.add(new JLabel("Nom : "), BorderLayout.EAST);
-                }
-                pIns_2.add(pIns_2_0_1);
-                JPanel r2 = new JPanel();{
-                    r2.add(this.tfInsNom);
-                }
-                pIns_2.add(r2);
+            JPanel pIns_2 = new JPanel(new GridLayout(11, 2));{
                 JPanel pIns_2_1 = new JPanel(new BorderLayout());{
-                    pIns_2_1.add(new JLabel("Prénom : "), BorderLayout.EAST);
+                    pIns_2_1.add(new JLabel("Nom : "), BorderLayout.EAST);
                 }
                 pIns_2.add(pIns_2_1);
-                JPanel r3 = new JPanel();{
-                    r3.add(this.tfInsPrenom);
+                JPanel pIns_2_2 = new JPanel();{
+                    pIns_2_2.add(this.tfInsNom);
                 }
-                pIns_2.add(r3);
-                pIns_2.add(new JLabel("Adresse : "));
-                pIns_2.add(new JLabel(""));
-                JPanel s1 = new JPanel(new BorderLayout());{
-                    s1.add(new JLabel("Rue :"), BorderLayout.EAST);
+                pIns_2.add(pIns_2_2);
+                JPanel pIns_2_3 = new JPanel(new BorderLayout());{
+                    pIns_2_3.add(new JLabel("Prénom : "), BorderLayout.EAST);
                 }
-                JPanel s2 = new JPanel(new FlowLayout());{
-                    s2.add(this.tfInsRue);
+                pIns_2.add(pIns_2_3);
+                JPanel pIns_2_4 = new JPanel();{
+                    pIns_2_4.add(this.tfInsPrenom);
                 }
-                JPanel s3 = new JPanel(new BorderLayout());{
-                    s3.add(new JLabel("Numéro :"), BorderLayout.EAST);
-                }
-                JPanel s4 = new JPanel(new FlowLayout());{
-                    s4.add(this.tfInsNumRue);
-                }
-                JPanel s5 = new JPanel(new BorderLayout());{
-                    s5.add(new JLabel("Ville :"), BorderLayout.EAST);
-                }
-                JPanel s6 = new JPanel(new FlowLayout());{
-                    s6.add(this.tfInsVille);
-                }
-                JPanel s7 = new JPanel(new BorderLayout());{
-                    s7.add(new JLabel("Code postal :"), BorderLayout.EAST);
-                }
-                JPanel s8 = new JPanel(new FlowLayout());{
-                    s8.add(this.tfInsCodePostal);
-                }
-                pIns_2.add(s1);
-                pIns_2.add(s2);
-                pIns_2.add(s3);
-                pIns_2.add(s4);
-                pIns_2.add(s5);
-                pIns_2.add(s6);
-                pIns_2.add(s7);
-                pIns_2.add(s8);
+                pIns_2.add(pIns_2_4);
 
-                pIns_2.add(new JLabel("Téléphone :"));
-                JPanel r4 = new JPanel();{
-                    r4.add(this.tfInsTel);
+                pIns_2.add(new JLabel(""));
+                pIns_2.add(new JLabel("Adresse : "));
+
+                JPanel pIns_2_5 = new JPanel(new BorderLayout());{
+                    pIns_2_5.add(new JLabel("Rue :"), BorderLayout.EAST);
                 }
-                pIns_2.add(r4);
-                pIns_2.add(new JLabel("Numéro étudiant / Salaire :"));
-                JPanel r5 = new JPanel();{
-                    r5.add(this.tfInsNumEtuSal);
+                JPanel pIns_2_6 = new JPanel(new FlowLayout());{
+                    pIns_2_6.add(this.tfInsRue);
                 }
-                pIns_2.add(r5);
+                JPanel pIns_2_7 = new JPanel(new BorderLayout());{
+                    pIns_2_7.add(new JLabel("Numéro :"), BorderLayout.EAST);
+                }
+                JPanel pIns_2_8 = new JPanel(new FlowLayout());{
+                    pIns_2_8.add(this.tfInsNumRue);
+                }
+                JPanel pIns_2_9 = new JPanel(new BorderLayout());{
+                    pIns_2_9.add(new JLabel("Ville :"), BorderLayout.EAST);
+                }
+                JPanel pIns_2_10 = new JPanel(new FlowLayout());{
+                    pIns_2_10.add(this.tfInsVille);
+                }
+                JPanel pIns_2_11 = new JPanel(new BorderLayout());{
+                    pIns_2_11.add(new JLabel("Code postal :"), BorderLayout.EAST);
+                }
+                JPanel pIns_2_12 = new JPanel(new FlowLayout());{
+                    pIns_2_12.add(this.tfInsCodePostal);
+                }
+                pIns_2.add(pIns_2_5);
+                pIns_2.add(pIns_2_6);
+                pIns_2.add(pIns_2_7);
+                pIns_2.add(pIns_2_8);
+                pIns_2.add(pIns_2_9);
+                pIns_2.add(pIns_2_10);
+                pIns_2.add(pIns_2_11);
+                pIns_2.add(pIns_2_12);
+
+                pIns_2.add(new JLabel(""));
+                pIns_2.add(new JLabel("------"));
+
+                JPanel pIns_2_13 = new JPanel(new BorderLayout()); {
+                    pIns_2_13.add(new JLabel("Téléphone :"), BorderLayout.EAST);
+                }
+                pIns_2.add(pIns_2_13);
+                JPanel pIns_2_14 = new JPanel();{
+                    pIns_2_14.add(this.tfInsTel);
+                }
+                pIns_2.add(pIns_2_14);
+                JPanel pIns_2_15 = new JPanel(new BorderLayout()); {
+                    pIns_2_15.add(new JLabel("Numéro étudiant / Salaire :"), BorderLayout.EAST);
+                }
+                pIns_2.add(pIns_2_15);
+                JPanel pIns_2_16 = new JPanel();{
+                    pIns_2_16.add(this.tfInsNumEtuSal);
+                }
+                pIns_2.add(pIns_2_16);
             }
             JPanel pIns_3 = new JPanel(new FlowLayout());{
                 pIns_3.add(this.bValiderAjoutAdherent);
