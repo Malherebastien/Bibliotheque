@@ -15,7 +15,11 @@ public class View {
     private JButton bAccInscription;
     private JButton bAccEmprunt;
     private JButton bAccDepot;
-    private JButton bAccVisite;
+    private JButton bAccListeLivres;
+    private JButton bAccListeUtilisateurs;
+    private JButton bAccDesinscription;
+    private JButton bAccSuppLivre;
+    private JButton bAccInscriptionInterne;
 
     //Inscription
     private JTextField tfInsNom;
@@ -27,6 +31,7 @@ public class View {
     private JTextField tfInsTel;
     private JTextField tfInsNumEtuSal;
     private JButton bValiderAjoutAdherent;
+    private CheckboxGroup cbgStatut;
 
     //Ajout Livre
     private JTextField tfAddLTitre;
@@ -99,17 +104,22 @@ public class View {
      */
     private void createView() {
         final int frameWidth = 500;
-        final int frameHeight = 450;
+        final int frameHeight = 500;
 
         mainFrame = new JFrame("Librairie");
         mainFrame.setPreferredSize(new Dimension(frameWidth, frameHeight));
+        mainFrame.setResizable(false);
 
         jtp = new JTabbedPane();
 
         this.bAccInscription = new JButton("S'inscrire");
         this.bAccEmprunt = new JButton("Emprunter un livre");
         this.bAccDepot = new JButton("Déposer un livre");
-        this.bAccVisite = new JButton("Visiter la bibliothèque");
+        this.bAccListeLivres = new JButton("Liste des livres");
+        this.bAccDesinscription = new JButton("Désinscription");
+        this.bAccListeUtilisateurs = new JButton("Liste des utilisateurs");
+        this.bAccInscriptionInterne = new JButton("Incription d'utilisateur interne");
+        this.bAccSuppLivre = new JButton("Suppression de livre");
 
         this.bValiderAjoutLivre = new JButton("Valider");
         this.bValiderSupAdherent = new JButton("Valider");
@@ -134,6 +144,7 @@ public class View {
         this.tfInsNumEtuSal = new JTextField();
         this.tfInsNumEtuSal.setPreferredSize( new Dimension( 200, 24 ) );
         this.bValiderAjoutAdherent = new JButton("Valider");
+        this.cbgStatut = new CheckboxGroup();
 
         //Emprunt
         this.tfEmpARef = new JTextField();
@@ -162,33 +173,78 @@ public class View {
      * Organise la fenêtre graphique et l'affiche
      */
     private void placeComponents() {
-        JPanel pAcceuil = new JPanel(new GridLayout(5, 1));{
+        JPanel pAcceuil = new JPanel(new BorderLayout());{
             JLabel jlAccueil = new JLabel(" Bienvenue à la bibliothèque BIBLIO TOC");
             jlAccueil.setFont(new Font("Arial", Font.BOLD, 16));
-            pAcceuil.add(jlAccueil);
-            JPanel pa_1 = new JPanel(new FlowLayout());{
-                pa_1.add(this.bAccInscription);
+            pAcceuil.add(jlAccueil, BorderLayout.NORTH);
+            JPanel pa_0 = new JPanel(new GridLayout(9, 1));{
+                JPanel pa_1 = new JPanel(new FlowLayout());{
+                    pa_1.add(this.bAccInscription);
+                }
+                JPanel pa_2 = new JPanel(new FlowLayout());{
+                    pa_2.add(this.bAccEmprunt);
+                }
+                JPanel pa_3 = new JPanel(new FlowLayout());{
+                    pa_3.add(this.bAccDepot);
+                }
+                JPanel pa_4 = new JPanel(new FlowLayout());{
+                    pa_4.add(this.bAccListeLivres);
+                }
+                JPanel pa_5 = new JPanel(new FlowLayout());{
+                    pa_5.add(this.bAccDesinscription);
+                }
+                JPanel pa_6 = new JPanel(new BorderLayout());{
+                    pa_6.add(new JLabel("Commandes Administrateur"));
+                }
+                JPanel pa_7 = new JPanel(new FlowLayout());{
+                    pa_7.add(this.bAccListeUtilisateurs);
+                }
+                JPanel pa_8 = new JPanel(new FlowLayout());{
+                    pa_8.add(this.bAccInscriptionInterne);
+                }
+                JPanel pa_9 = new JPanel(new FlowLayout());{
+                    pa_9.add(this.bAccSuppLivre);
+                }
+                pa_0.add(pa_1);
+                pa_0.add(pa_2);
+                pa_0.add(pa_3);
+                pa_0.add(pa_4);
+                pa_0.add(pa_5);
+                pa_0.add(pa_6);
+                pa_0.add(pa_7);
+                pa_0.add(pa_8);
+                pa_0.add(pa_9);
             }
-            JPanel pa_2 = new JPanel(new FlowLayout());{
-                pa_2.add(this.bAccEmprunt);
-            }
-            JPanel pa_3 = new JPanel(new FlowLayout());{
-                pa_3.add(this.bAccDepot);
-            }
-            JPanel pa_4 = new JPanel(new FlowLayout());{
-                pa_4.add(this.bAccVisite);
-            }
-            pAcceuil.add(pa_1);
-            pAcceuil.add(pa_2);
-            pAcceuil.add(pa_3);
-            pAcceuil.add(pa_4);
+            pAcceuil.add(pa_0, BorderLayout.CENTER);
         }
         JPanel pIns = new JPanel(new BorderLayout()); {
-            JPanel pIns_1 = new JPanel();{
-                JLabel jlTop = new JLabel("Formulaire d'inscription");
-                jlTop.setFont(new Font("Arial", Font.BOLD, 12));
-                pIns_1.add(jlTop);
+            JPanel pIns_1 = new JPanel(new GridLayout(2, 1));{
+                JPanel pIns_1_0 = new JPanel();{
+                    JLabel jlTop = new JLabel("Formulaire d'inscription");
+                    jlTop.setFont(new Font("Arial", Font.BOLD, 16));
+                    pIns_1_0.add(jlTop);
+                }
+
+                JPanel pIns_1_1 = new JPanel(new GridLayout(2, 1));{
+                    JPanel pIns_1_1_1 = new JPanel();{
+                        JLabel jlStatut = new JLabel("Statut");
+                        pIns_1_1_1.add(jlStatut);
+                    }
+                    JPanel pIns_1_1_2 = new JPanel(new GridLayout(1, 3));{
+                        pIns_1_1_2.add(new Checkbox("Etudiant", this.cbgStatut, false));
+                        pIns_1_1_2.add(new Checkbox("Salarié", this.cbgStatut, false));
+                        pIns_1_1_2.add(new Checkbox("Sans emploi", this.cbgStatut, false));
+                    }
+                    pIns_1_1.add(pIns_1_1_1);
+                    pIns_1_1.add(pIns_1_1_2);
+
+                }
+                pIns_1.add(pIns_1_0);
+                pIns_1.add(pIns_1_1);
+
+
             }
+
             JPanel pIns_2 = new JPanel(new GridLayout(11, 2));{
                 JPanel pIns_2_1 = new JPanel(new BorderLayout());{
                     pIns_2_1.add(new JLabel("Nom : "), BorderLayout.EAST);
@@ -417,9 +473,14 @@ public class View {
         bValiderAjoutAdherent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(true) model.addEtudiant(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
-                else model.addSalarie(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
+                if(cbgStatut.getSelectedCheckbox().getLabel().equals("Etudiant"))
+                    model.addEtudiant(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
 
+                else if(cbgStatut.getSelectedCheckbox().getLabel().equals("Salarié"))
+                    model.addSalarie(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
+
+                else if(cbgStatut.getSelectedCheckbox().getLabel().equals("Sans emploi"))
+                    model.addSalarie(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
             }
         });
         bValiderEmprunt.addActionListener(new ActionListener() {
@@ -467,7 +528,7 @@ public class View {
                 jtp.setSelectedIndex(3);
             }
         });
-        bAccVisite.addActionListener(new ActionListener() {
+        bAccListeLivres.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jtp.setEnabledAt(1, false);
