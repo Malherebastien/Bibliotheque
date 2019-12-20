@@ -237,12 +237,9 @@ public class View {
                     }
                     pIns_1_1.add(pIns_1_1_1);
                     pIns_1_1.add(pIns_1_1_2);
-
                 }
                 pIns_1.add(pIns_1_0);
                 pIns_1.add(pIns_1_1);
-
-
             }
 
             JPanel pIns_2 = new JPanel(new GridLayout(11, 2));{
@@ -439,7 +436,19 @@ public class View {
             pDepot.add(pde_2, BorderLayout.CENTER);
             pDepot.add(pde_3, BorderLayout.SOUTH);
         }
-        JPanel pVisite = new JPanel();{
+        JPanel pListeLivres = new JPanel();{
+
+        }
+        JPanel pDesinscription = new JPanel();{
+
+        }
+        JPanel pListeUtilisateurs = new JPanel();{
+
+        }
+        JPanel pInscriptionInterne = new JPanel();{
+
+        }
+        JPanel pSuppressionLivre = new JPanel();{
 
         }
 
@@ -447,12 +456,21 @@ public class View {
         jtp.addTab("Inscription", pIns);
         jtp.addTab("Emprunt", pEmprunt);
         jtp.addTab("Dépot", pDepot);
-        jtp.addTab("Visite", pVisite);
+        jtp.addTab("Liste des livres", pListeLivres);
+        jtp.addTab("Desinscription", pDesinscription);
+        jtp.addTab("Liste des utilisateurs", pListeUtilisateurs);
+        jtp.addTab("Inscrip. user interne", pInscriptionInterne);
+        jtp.addTab("Suppression livres", pSuppressionLivre);
 
         jtp.setEnabledAt(1, false);
         jtp.setEnabledAt(2, false);
         jtp.setEnabledAt(3, false);
         jtp.setEnabledAt(4, false);
+        jtp.setEnabledAt(5, false);
+        jtp.setEnabledAt(6, false);
+        jtp.setEnabledAt(7, false);
+        jtp.setEnabledAt(8, false);
+        jtp.setEnabledAt(9, false);
 
         mainFrame.add(jtp);
     }
