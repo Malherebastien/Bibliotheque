@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 /**
  * La classe représentant un auteur.
- * @author Bastien Malhere
- * @version 1.0
+ * @author Bastien Malhere, Gabin Pruvost--Couvreur
+ * @version 3.0
  * @since 1.0
  * @see Livre
  */

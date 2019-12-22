@@ -1,3 +1,10 @@
+/**
+ * La classe permettant d'afficher les livres correspondants à la recherche
+ * @author Bastien Malhere, Gabin Pruvost--Couvreur
+ * @version 3.0
+ * @since 3.0
+ * @see Controller
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +23,12 @@ public class AffLivres {
     private JButton bAnnul;
     private JComboBox liste;
 
+    /**
+     * Constructeur de l'afficheur de livres
+     * @param al la liste de tout les livres
+     * @param ctrler Le controleur de l'application
+     * @param refA La référence de l'adherent qui fais la recherche
+     */
     public AffLivres(ArrayList<Livre> al, Controller ctrler, String refA){
         this.alLivre = al;
         this.controller = ctrler;
@@ -26,6 +39,9 @@ public class AffLivres {
         createController();
     }
 
+    /**
+     * Affiche les composants. A appeler à chaque rafraichissement et lors de la création
+     */
     public void display() {
         listFrame.pack();
         listFrame.setLocationRelativeTo(null);

@@ -1,7 +1,7 @@
 /**
  * La classe représentant une adresse. On considère que l'adresse est une adresse française.
- * @author Bastien Malhere
- * @version 2.0
+ * @author Bastien Malhere, Gabin Pruvost--Couvreur
+ * @version 3.0
  * @since 1.0
  */
 public class Adresse {
@@ -43,6 +43,9 @@ public class Adresse {
         this.codePostal = codePostal;
     }
 
+    /**
+     * Constructeur d'adresse vide
+     */
     public Adresse(){
         this.rue = "";
         this.numDeRue = 0;

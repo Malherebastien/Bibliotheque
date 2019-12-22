@@ -1,3 +1,7 @@
+/**
+ *
+ */
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +36,13 @@ public class Controller extends Observable {
 
     public HashMap<String, Livre> getHmLivres(){ return this.hmLivres; }
 
+    /**
+     * Crée un livre et l'ajoute à la hashmap de livres si le livre à un seul auteur
+     * @param titre Le titre du livre
+     * @param auteur L'auteur du livre
+     * @param editeur
+     * @param anneeEdition
+     */
     public void addLivre(String titre, Auteur auteur, String editeur, String anneeEdition){
         String ref = "L" + (hmLivres.size() + 1);
         hmLivres.put(ref, new Livre(titre, auteur, editeur, Integer.parseInt(anneeEdition)));
