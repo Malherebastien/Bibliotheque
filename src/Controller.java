@@ -7,26 +7,27 @@ public class Controller extends Observable {
 
     private HashMap<String, Adherent> hmAdherents;
     private HashMap<String, Livre> hmLivres;
+    private HashMap<String, Personnel> hmPersonne;
 
     public Controller() {
         this.hmAdherents = new HashMap<String, Adherent>();
         this.hmLivres = new HashMap<String, Livre>();
+        this.hmPersonne = new HashMap<String, Personnel>();
     }
 
-    public void addEtudiant(String nom, String prenom, Adresse adresse, String numEtu, String tel){
-        String ref = "E" + String.format("%05d", hmAdherents.size() + 1);
-        hmAdherents.put(ref, new Etudiant(nom, prenom, adresse, tel, Integer.parseInt(numEtu)));
+    public void addAdherent(String nom, String prenom, Adresse adresse, String numESal, String tel, String statut){
+        String ref = "A" + String.format("%05d", hmAdherents.size() + 1);
+        if (statut.equals("Etudiant"))  hmAdherents.put(ref, new Etudiant(nom, prenom, adresse, tel, Integer.parseInt(numESal)));
+        if (statut.equals("Salarié"))  hmAdherents.put(ref, new Salarie(nom, prenom, adresse, tel, Integer.parseInt(numESal)));
+        if (statut.equals("Sans emploi"))  hmAdherents.put(ref, new SansEmploi(nom, prenom, adresse, tel));
+
         final JPanel jp = new JPanel();
         JOptionPane.showMessageDialog(jp, "Incription réussie " + prenom + "! Le code d'adhérent qui vous a été attribué est : " +
                 ref, "Inscription réussie", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void addSalarie(String nom, String prenom, Adresse adresse, String salaire, String tel){
-        String ref = "S" + String.format("%05d", hmAdherents.size() + 1);
-        hmAdherents.put(ref, new Salarie(nom, prenom, adresse, tel, Integer.parseInt(salaire)));
-        final JPanel jp = new JPanel();
-        JOptionPane.showMessageDialog(jp, "Incription réussie " + prenom + "! Le code d'adhérent qui vous a été attribué est : " +
-                ref, "Inscription réussie", JOptionPane.INFORMATION_MESSAGE);
+    public void addPersonne(){
+
     }
 
     public void addLivre(String titre, Auteur auteur, String editeur, String anneeEdition){
@@ -124,6 +125,39 @@ public class Controller extends Observable {
         return -1;
     }
 
+    public void suppLivre(String refL){
+        if(!refL.equals("") && hmLivres.get(refL)!=null){
+           if(hmLivres.get(refL).isEstDisponible()){
+               hmLivres.remove(refL);
+               final JPanel jp = new JPanel();
+               JOptionPane.showMessageDialog(jp, "Le livre de référence " + refL + " a bien été supprimé.", "Suppression réussie", JOptionPane.INFORMATION_MESSAGE);
+           }
+           else {
+               errorMessage("livreEmprunte");
+           }
+        } else {
+            errorMessage("refLEmprunt");
+        }
+    }
+
+    public void desinscriptionAdh(String numA){
+        if(!numA.equals("") && hmAdherents.get(numA)!=null){
+            if(hmAdherents.get(numA).getLivresEmpruntes().size() == 0){
+                String p = hmAdherents.get(numA).getPrenom();
+                String n = hmAdherents.get(numA).getNom();
+                hmAdherents.remove(numA);
+                final JPanel jp = new JPanel();
+                JOptionPane.showMessageDialog(jp,  p + " " + n + ", vous avez bien été retiré de la liste des inscrits.", "Désinscription réussie", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else {
+                errorMessage("livreNonRendu");
+            }
+        } else {
+            errorMessage("refAEmprunt");
+        }
+    }
+
+
     private void errorMessage(String code){
         final JPanel panel = new JPanel();
         String mess;
@@ -145,6 +179,12 @@ public class Controller extends Observable {
                 break;
             case "presenceEmprunt" :
                 mess = "Aucun livre avec cette référence dans la liste d'emprunt de cet adhérent.";
+                break;
+            case "livreEmprunte" :
+                mess = "Suppression impossible, le livre est en cours d'emprunt.";
+                break;
+            case "livreNonRendu" :
+                mess = "Veuillez rendre tous les livres avant de vous désinscrire.";
                 break;
             default :
                 mess = "Erreur de segmentation ;p";

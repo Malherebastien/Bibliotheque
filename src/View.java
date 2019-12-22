@@ -33,6 +33,13 @@ public class View {
     private JButton bValiderAjoutAdherent;
     private CheckboxGroup cbgStatut;
 
+    //Inscription interne
+    private JTextField tfInsINom;
+    private JTextField tfInsIPrenom;
+    private JTextField tfInsIAge;
+    private JButton bValiderInsInterne;
+    private CheckboxGroup cbgStatutI;
+
     //Ajout Livre
     private JTextField tfAddLTitre;
     private JTextField tfAddLAuteur;
@@ -72,10 +79,10 @@ public class View {
         placeComponents();
         createController();
 
-        model.addEtudiant("Pruvost---Couvreur", "Gabin", new Adresse(), "1234", "0000000000");
-        model.addEtudiant("Malherbe", "Bastien", new Adresse(), "4321", "111111111111");
-        model.addSalarie("Duvalon", "Paul", new Adresse(), "1111", "2222222222");
-        model.addSalarie("Levesque", "Paulinette", new Adresse(), "1000000", "3333333333");
+        model.addAdherent("Pruvost---Couvreur", "Gabin", new Adresse(), "1234", "0000000000", "Etudiant");
+        model.addAdherent("Malherbe", "Bastien", new Adresse(), "4321", "111111111111", "Etudiant");
+        model.addAdherent("Duvalon", "Paul", new Adresse(), "1111", "2222222222", "Salarié");
+        model.addAdherent("Levesque", "Paulinette", new Adresse(), "1000000", "3333333333", "Salarié");
 
         model.addLivre("20 milieux sous la Terre", new Auteur("Julien", "Verni"), "La marmotte de milka", "1984");
         model.addLivre("Le bleu du ciel", new Auteur("Un", "oiseau"), "Les aut' oiseaux", "2015");
@@ -103,7 +110,7 @@ public class View {
      * Initialise tous les éléments graphiques
      */
     private void createView() {
-        final int frameWidth = 500;
+        final int frameWidth = 700;
         final int frameHeight = 500;
 
         mainFrame = new JFrame("Librairie");
@@ -123,7 +130,7 @@ public class View {
 
         this.bValiderAjoutLivre = new JButton("Valider");
         this.bValiderSupAdherent = new JButton("Valider");
-        this.bValiderSupLivre = new JButton("Valider");
+
 
 
         //Inscriptoin
@@ -167,6 +174,26 @@ public class View {
         this.tfDepotLRef = new JTextField();
         this.tfDepotLRef.setPreferredSize( new Dimension( 200, 24 ) );
         this.bValiderRendu = new JButton("RENDRE");
+
+        //Suppression livre
+        this.tfRefSupp = new JTextField();
+        this.tfRefSupp.setPreferredSize( new Dimension( 200, 24 ) );
+        this.bValiderSupLivre = new JButton("Valider");
+
+        //Desinscription
+        this.tfNumSupp = new JTextField();
+        this.tfNumSupp.setPreferredSize( new Dimension( 200, 24 ) );
+        this.bValiderSupAdherent = new JButton("Valider");
+
+        //Inscription interne
+        this.tfInsINom = new JTextField();
+        this.tfInsINom.setPreferredSize( new Dimension( 200, 24 ) );
+        this.tfInsIPrenom = new JTextField();
+        this.tfInsIPrenom.setPreferredSize( new Dimension( 200, 24 ) );
+        this.tfInsIAge = new JTextField();
+        this.tfInsIAge.setPreferredSize( new Dimension( 200, 24 ) );
+        this.bValiderInsInterne = new JButton("Valider");
+        this.cbgStatutI = new CheckboxGroup();
     }
 
     /**
@@ -436,20 +463,147 @@ public class View {
             pDepot.add(pde_2, BorderLayout.CENTER);
             pDepot.add(pde_3, BorderLayout.SOUTH);
         }
+
         JPanel pListeLivres = new JPanel();{
 
         }
+
         JPanel pDesinscription = new JPanel();{
+            JPanel pSuppL_1 = new JPanel();{
+                JLabel jlTop = new JLabel("Desinscription d'utilisateur");
+                jlTop.setFont(new Font("Arial", Font.BOLD, 16));
+                pSuppL_1.add(jlTop);
+            }
+            JPanel pSuppL_2 = new JPanel(new GridLayout(1, 2));{
+                JPanel pSuppL_2_1 = new JPanel(new FlowLayout());
+                {
+                    pSuppL_2_1.add(new JLabel("Référence d'utilisateur : "), BorderLayout.EAST);
+                }
+                JPanel pSuppL_2_2 = new JPanel(new FlowLayout());
+                {
+                    pSuppL_2_2.add(this.tfNumSupp);
+                }
+
+                pSuppL_2.add(pSuppL_2_1);
+                pSuppL_2.add(pSuppL_2_2);
+            }
+            JPanel pSuppL_3 = new JPanel(new FlowLayout());
+            {
+                pSuppL_3.add(this.bValiderSupAdherent);
+            }
+
+            pDesinscription.add(pSuppL_1, BorderLayout.NORTH);
+            pDesinscription.add(pSuppL_2, BorderLayout.CENTER);
+            pDesinscription.add(pSuppL_3, BorderLayout.SOUTH);
+        }
+
+        JPanel pListeUtilisateurs = new JPanel(); {
 
         }
-        JPanel pListeUtilisateurs = new JPanel();{
 
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        JPanel pInscriptionInterne = new JPanel(); {
+            JPanel pInsI_1 = new JPanel(new GridLayout(2, 1));
+            {
+                JPanel pInsI_1_0 = new JPanel();
+                {
+                    JLabel jlTop = new JLabel("Formulaire d'inscription interne");
+                    jlTop.setFont(new Font("Arial", Font.BOLD, 16));
+                    pInsI_1_0.add(jlTop);
+                }
+
+                JPanel pInsI_1_1 = new JPanel(new GridLayout(2, 1));
+                {
+                    JPanel pInsI_1_1_1 = new JPanel();
+                    {
+                        JLabel jlStatut = new JLabel("Statut");
+                        pInsI_1_1_1.add(jlStatut);
+                    }
+                    JPanel pInsI_1_1_2 = new JPanel(new GridLayout(1, 3));
+                    {
+                        pInsI_1_1_2.add(new Checkbox("Directeur", this.cbgStatutI, false));
+                        pInsI_1_1_2.add(new Checkbox("Bibliothécaire", this.cbgStatutI, false));
+                        pInsI_1_1_2.add(new Checkbox("Secrétaire", this.cbgStatutI, false));
+                    }
+                    pInsI_1_1.add(pInsI_1_1_1);
+                    pInsI_1_1.add(pInsI_1_1_2);
+                }
+                pInsI_1.add(pInsI_1_0);
+                pInsI_1.add(pInsI_1_1);
+            }
+
+            JPanel pInsI_2 = new JPanel(new GridLayout(3, 2));
+            {
+                JPanel pInsI_2_1 = new JPanel(new BorderLayout());
+                {
+                    pInsI_2_1.add(new JLabel("Nom : "), BorderLayout.EAST);
+                }
+                pInsI_2.add(pInsI_2_1);
+                JPanel pInsI_2_2 = new JPanel();
+                {
+                    pInsI_2_2.add(this.tfInsINom);
+                }
+                pInsI_2.add(pInsI_2_2);
+                JPanel pIns_2_3 = new JPanel(new BorderLayout());
+                {
+                    pIns_2_3.add(new JLabel("Prénom : "), BorderLayout.EAST);
+                }
+                pInsI_2.add(pIns_2_3);
+                JPanel pInsI_2_4 = new JPanel();
+                {
+                    pInsI_2_4.add(this.tfInsIPrenom);
+                }
+                pInsI_2.add(pInsI_2_4);
+                JPanel pInsI_2_5 = new JPanel(new BorderLayout());
+                {
+                    pInsI_2_5.add(new JLabel("Age : "), BorderLayout.EAST);
+                }
+                pInsI_2.add(pInsI_2_5);
+                JPanel pInsI_2_6 = new JPanel();
+                {
+                    pInsI_2_6.add(this.tfInsIAge);
+                }
+                pInsI_2.add(pInsI_2_6);
+            }
+
+            JPanel pInsI_3 = new JPanel(new FlowLayout());
+
+            {
+                pInsI_3.add(this.bValiderSupAdherent);
+            }
+
+            pInscriptionInterne.add(pInsI_1, BorderLayout.NORTH);
+            pInscriptionInterne.add(pInsI_2, BorderLayout.CENTER);
+            pInscriptionInterne.add(pInsI_3, BorderLayout.SOUTH);
         }
-        JPanel pInscriptionInterne = new JPanel();{
 
-        }
-        JPanel pSuppressionLivre = new JPanel();{
+        JPanel pSuppressionLivre = new JPanel(new BorderLayout());{
+            JPanel pSuppL_1 = new JPanel();{
+                JLabel jlTop = new JLabel("Suppression de livre");
+                jlTop.setFont(new Font("Arial", Font.BOLD, 16));
+                pSuppL_1.add(jlTop);
+            }
+            JPanel pSuppL_2 = new JPanel(new GridLayout(1, 2));{
+                JPanel pSuppL_2_1 = new JPanel(new FlowLayout());
+                {
+                    pSuppL_2_1.add(new JLabel("Référence du livre : "), BorderLayout.EAST);
+                }
+                JPanel pSuppL_2_2 = new JPanel(new FlowLayout());
+                {
+                    pSuppL_2_2.add(this.tfRefSupp);
+                }
 
+                pSuppL_2.add(pSuppL_2_1);
+                pSuppL_2.add(pSuppL_2_2);
+            }
+            JPanel pSuppL_3 = new JPanel(new FlowLayout());
+            {
+                pSuppL_3.add(this.bValiderSupLivre);
+            }
+
+            pSuppressionLivre.add(pSuppL_1, BorderLayout.NORTH);
+            pSuppressionLivre.add(pSuppL_2, BorderLayout.CENTER);
+            pSuppressionLivre.add(pSuppL_3, BorderLayout.SOUTH);
         }
 
         jtp.addTab("Accueil", pAcceuil);
@@ -470,7 +624,6 @@ public class View {
         jtp.setEnabledAt(6, false);
         jtp.setEnabledAt(7, false);
         jtp.setEnabledAt(8, false);
-        jtp.setEnabledAt(9, false);
 
         mainFrame.add(jtp);
     }
@@ -491,14 +644,7 @@ public class View {
         bValiderAjoutAdherent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(cbgStatut.getSelectedCheckbox().getLabel().equals("Etudiant"))
-                    model.addEtudiant(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
-
-                else if(cbgStatut.getSelectedCheckbox().getLabel().equals("Salarié"))
-                    model.addSalarie(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
-
-                else if(cbgStatut.getSelectedCheckbox().getLabel().equals("Sans emploi"))
-                    model.addSalarie(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
+                    model.addAdherent(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText(), cbgStatut.getSelectedCheckbox().getLabel());
             }
         });
         bValiderEmprunt.addActionListener(new ActionListener() {
@@ -514,48 +660,76 @@ public class View {
                 model.deposerLivre(tfDepotARef.getText(), tfDepotLRef.getText());
             }
         });
+        bValiderSupLivre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.suppLivre(tfRefSupp.getText());
+            }
+        });
+        bValiderSupAdherent.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.desinscriptionAdh(tfNumSupp.getText());
+            }
+        });
 
         bAccInscription.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jtp.setEnabledAt(2, false);
-                jtp.setEnabledAt(3, false);
-                jtp.setEnabledAt(4, false);
-                jtp.setEnabledAt(1, true);
-                jtp.setSelectedIndex(1);
+                switchTable(1);
             }
         });
 
         bAccEmprunt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jtp.setEnabledAt(1, false);
-                jtp.setEnabledAt(3, false);
-                jtp.setEnabledAt(4, false);
-                jtp.setEnabledAt(2, true);
-                jtp.setSelectedIndex(2);
+                switchTable(2);
             }
         });
         bAccDepot.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jtp.setEnabledAt(1, false);
-                jtp.setEnabledAt(2, false);
-                jtp.setEnabledAt(4, false);
-                jtp.setEnabledAt(3, true);
-                jtp.setSelectedIndex(3);
+                switchTable(3);
             }
         });
         bAccListeLivres.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jtp.setEnabledAt(1, false);
-                jtp.setEnabledAt(2, false);
-                jtp.setEnabledAt(3, false);
-                jtp.setEnabledAt(4, true);
-                jtp.setSelectedIndex(4);
+               switchTable(4);
             }
         });
+        bAccDesinscription.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchTable(5);
+            }
+        });
+        bAccListeUtilisateurs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchTable(6);
+            }
+        });
+        bAccInscriptionInterne.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchTable(7);
+            }
+        });
+        bAccSuppLivre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchTable(8);
+            }
+        });
+    }
+
+    private void switchTable(int i){
+        for (int j = 1; j < 9; j++){
+            if (i != j) jtp.setEnabledAt(j, false);
+        }
+        jtp.setEnabledAt(i, true);
+        jtp.setSelectedIndex(i);
     }
 
     private void refresh() {
