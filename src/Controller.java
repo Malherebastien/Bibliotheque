@@ -1,5 +1,9 @@
 /**
- *
+ * Le controlleur de l'application graphique avec le pattern MVC
+ * @author Bastien Malhere, Gabin Pruvost-Couvreur
+ * @version 3.0
+ * @since 3.0
+ * @see View
  */
 
 import javax.swing.*;
@@ -11,37 +15,116 @@ public class Controller extends Observable {
 
     private HashMap<String, Adherent> hmAdherents;
     private HashMap<String, Livre> hmLivres;
-    private HashMap<String, Personnel> hmPersonne;
+    private HashMap<String, Personnel> hmPersonnel;
 
     public Controller() {
         this.hmAdherents = new HashMap<String, Adherent>();
         this.hmLivres = new HashMap<String, Livre>();
-        this.hmPersonne = new HashMap<String, Personnel>();
+        this.hmPersonnel = new HashMap<String, Personnel>();
     }
 
-    public void addAdherent(String nom, String prenom, Adresse adresse, String numESal, String tel, String statut){
+    /**
+     * Ajoute un adherent Etudiant
+     * @param nom Nom de l'etudiant
+     * @param prenom Prenom de l'etudiant
+     * @param adresse Adresse de l'etudiant
+     * @param numEtu Le numéro de l'étudiant
+     * @param tel Le téléphone de l'etudiant
+     */
+    public void addEtudiant(String nom, String prenom, Adresse adresse, String numEtu, String tel){
         String ref = "A" + String.format("%05d", hmAdherents.size() + 1);
-        if (statut.equals("Etudiant"))  hmAdherents.put(ref, new Etudiant(nom, prenom, adresse, tel, Integer.parseInt(numESal)));
-        if (statut.equals("Salarié"))  hmAdherents.put(ref, new Salarie(nom, prenom, adresse, tel, Integer.parseInt(numESal)));
-        if (statut.equals("Sans emploi"))  hmAdherents.put(ref, new SansEmploi(nom, prenom, adresse, tel));
+        hmAdherents.put(ref, new Etudiant(nom, prenom, adresse, tel, Integer.parseInt(numEtu)));
 
+        createJPanel(prenom, ref);
+    }
+
+    /**
+     * Ajoute un adherent Salarie
+     * @param nom Nom de l'etudiant
+     * @param prenom Prenom de l'etudiant
+     * @param adresse Adresse de l'etudiant
+     * @param salaireBrut Le numéro de l'étudiant
+     * @param tel Le téléphone de l'etudiant
+     */
+    public void addSalarie(String nom, String prenom, Adresse adresse, String salaireBrut, String tel, String statut){
+        String ref = "A" + String.format("%05d", hmAdherents.size() + 1);
+        hmAdherents.put(ref, new Salarie(nom, prenom, adresse, tel, Integer.parseInt(salaireBrut)));
+
+        createJPanel(prenom, ref);
+    }
+
+    /**
+     * Ajoute un adherent Sans-Emploi
+     * @param nom Nom du sans-emploi
+     * @param prenom Prenom du sans-emploi
+     * @param adresse Adresse du sans-emploi
+     * @param tel Le téléphone du sans-emploi
+     */
+    public void addSansEmploi(String nom, String prenom, Adresse adresse, String numESal, String tel, String statut){
+        String ref = "A" + String.format("%05d", hmAdherents.size() + 1);
+        hmAdherents.put(ref, new SansEmploi(nom, prenom, adresse, tel));
+
+        createJPanel(prenom, ref);
+    }
+
+    /**
+     * Ajoute un personnel Directeur
+     * @param nom Nom du personnel
+     * @param prenom Prenom du personnel
+     * @param age Age du personnel
+     */
+    public void addDirecteur(String nom, String prenom, int age) {
+        String ref = "A" + String.format("%05d", hmPersonnel.size() + 1);
+        hmPersonnel.put(ref, new Directeur(nom, prenom, age));
+
+        createJPanel(prenom, ref);
+    }
+
+    /**
+     * Ajoute un personnel Secretaire
+     * @param nom Nom du personnel
+     * @param prenom Prenom du personnel
+     * @param age Age du personnel
+     */
+    public void addSecretaire(String nom, String prenom, int age) {
+        String ref = "A" + String.format("%05d", hmPersonnel.size() + 1);
+        hmPersonnel.put(ref, new Secretaire(nom, prenom, age));
+
+        createJPanel(prenom, ref);
+    }
+
+    /**
+     * Ajoute un personnel Bibliothecaire
+     * @param nom Nom du personnel
+     * @param prenom Prenom du personnel
+     * @param age Age du personnel
+     */
+    public void addBibliothecaire(String nom, String prenom, int age) {
+        String ref = "A" + String.format("%05d", hmPersonnel.size() + 1);
+        hmPersonnel.put(ref, new Bibliothecaire(nom, prenom, age));
+
+        createJPanel(prenom, ref);
+    }
+
+    /**
+     * Cree le JPanel qui affiche le message indiquant la réussite de l'inscription et le code d'adhérent
+     * @param prenom Prenom de la personne inscrite, afin de l'écrire
+     * @param ref Reférence de l'adherent
+     */
+    private void createJPanel(String prenom, String ref) {
         final JPanel jp = new JPanel();
         JOptionPane.showMessageDialog(jp, "Incription réussie " + prenom + "! Le code d'adhérent qui vous a été attribué est : " +
                 ref, "Inscription réussie", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void addPersonne(){
-
-    }
-
-    public HashMap<String, Livre> getHmLivres(){ return this.hmLivres; }
+    //TODO Cree une message d'affichage en cas d'erreur
 
     /**
      * Crée un livre et l'ajoute à la hashmap de livres si le livre à un seul auteur
      * @param titre Le titre du livre
      * @param auteur L'auteur du livre
-     * @param editeur
-     * @param anneeEdition
+     * @param editeur L'editeur du livre
+     * @param anneeEdition l'année d'edition du livre
      */
     public void addLivre(String titre, Auteur auteur, String editeur, String anneeEdition){
         String ref = "L" + (hmLivres.size() + 1);
@@ -51,7 +134,18 @@ public class Controller extends Observable {
                 ref, "Inscription réussie", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public boolean demandeEmprunt(String refAdherent, String refLivre, String titre, String auteur, String editeur, String anneEdition){
+    /**
+     * L'adherent avec le numero refAdherent demande l'emprunt du livre refLivre. Si la reference du livre n'est pas
+     * remplie on recherchera en fonction des autres paramètres (titre, auteur, editeur, annéeEdition)
+     * @param refAdherent La référence de l'adhérent souhnaitant emprunter
+     * @param refLivre La référence du livre demandant à être emprunté
+     * @param titre Le titre du livre demandé
+     * @param auteur L'auteur du livre demandé
+     * @param editeur L'editeur du livre demandé
+     * @param anneeEdition L'année d'edition du livre demandé
+     * @return True si le livre existe et est disponible, false sinon
+     */
+    public boolean demandeEmprunt(String refAdherent, String refLivre, String titre, String auteur, String editeur, String anneeEdition){
         if(refAdherent.equals("")){
             errorMessage("refAEmprunt");
             return false;
@@ -70,33 +164,47 @@ public class Controller extends Observable {
                 return false;
             }
         } else{
-            if(titre.equals("") && auteur.equals("") && editeur.equals("") && anneEdition.equals("")){
+            if(titre.equals("") && auteur.equals("") && editeur.equals("") && anneeEdition.equals("")){
                 errorMessage("infoEmprunt");
                 return false;
             } else {
-                rechercheLivre(refAdherent, titre, auteur, editeur, anneEdition);
+                rechercheLivre(refAdherent, titre, auteur, editeur, anneeEdition);
             }
         }
         return true;
     }
 
-    private void rechercheLivre(String refA, String titre, String auteur, String editeur, String anneEdition) {
+    /**
+     * Recherche un livre
+     * @param refAdherent La référence adhérent. Pas utilisé dans la recherche mais à passer
+     * @param titre Le titre du livre recherché
+     * @param auteur L'auteur du livre recherché
+     * @param editeur L'editeur du livre recherché
+     * @param anneeEdition L'annee d'édition du livre recherché
+     */
+    private void rechercheLivre(String refAdherent, String titre, String auteur, String editeur, String anneeEdition) {
         ArrayList<Livre> alLivresTrouve = new ArrayList<Livre>();
-        for(Livre l : hmLivres.values()){
-            if((!titre.equals("") && !titre.equals(l.getTitre())) ||
-                    (!auteur.equals("") && !auteur.equals(l.getAuteurs().get(0).getNom())) ||
-                    (!editeur.equals("") && !editeur.equals(l.getEditeur())) ||
-                    (!anneEdition.equals("") && !anneEdition.equals(l.getAnneeEdition()+""))){
-                continue;
-            } else {
-                alLivresTrouve.add(l);
-            }
+        for(Livre livre : hmLivres.values()) {
+            boolean trouve = (!titre.equals("") && !titre.equals(livre.getTitre())) ||
+                    (!auteur.equals("") && !auteur.equals(livre.getAuteurs().get(0).getNom())) ||
+                    (!editeur.equals("") && !editeur.equals(livre.getEditeur())) ||
+                    (!anneeEdition.equals("") && !anneeEdition.equals(livre.getAnneeEdition()+""));
+
+            if(!trouve)
+                alLivresTrouve.add(livre);
         }
 
-        if (alLivresTrouve.size() == 0) errorMessage("AucunLivre");
-        else new AffLivres(alLivresTrouve, this, refA).display();
+        if (alLivresTrouve.size() == 0)
+            errorMessage("AucunLivre");
+        else
+            new AffLivres(alLivresTrouve, this, refAdherent).display();
     }
 
+    /**
+     * Fait un emprunt en passant la ref d'un adherent et celle d'un livre
+     * @param refLivre Reference d'un livre
+     * @param refAdherent Reference d'un adherent
+     */
     public void empruntRefRef(String refLivre, String refAdherent) {
         if(hmLivres.get(refLivre).isEstDisponible()){
             hmAdherents.get(refAdherent).getLivresEmpruntes().add(hmLivres.get(refLivre));
@@ -107,6 +215,11 @@ public class Controller extends Observable {
         } else errorMessage("dejaPris");
     }
 
+    /**
+     * Rends un livre en passant la ref d'un adherent et celle d'un livre
+     * @param refAdherent La reference de l'adherent
+     * @param refLivre La reference du livre
+     */
     public void deposerLivre(String refAdherent, String refLivre) {
         if(!refAdherent.equals("") && hmAdherents.get(refAdherent)!=null){
             if(!refLivre.equals("") && hmLivres.get(refLivre)!=null){
@@ -129,6 +242,12 @@ public class Controller extends Observable {
         }
     }
 
+    /**
+     * Verifie si le livre est emprunté par un adherent
+     * @param refAdherent La reference de l'adherent
+     * @param refLivre La reference du livre
+     * @return l'index du livre dans la hashMap de l'adherent
+     */
     private int verifyPossession(String refAdherent, String refLivre) {
         int cpt = 0;
         for(Livre l : hmAdherents.get(refAdherent).getLivresEmpruntes()){
@@ -138,6 +257,10 @@ public class Controller extends Observable {
         return -1;
     }
 
+    /**
+     * Supprime un livre des stocks de la bibliotheque
+     * @param refL La reference du livre à supprimer
+     */
     public void suppLivre(String refL){
         if(!refL.equals("") && hmLivres.get(refL)!=null){
            if(hmLivres.get(refL).isEstDisponible()){
@@ -153,6 +276,10 @@ public class Controller extends Observable {
         }
     }
 
+    /**
+     * Désinscrit un adherent si il n'a aucun livres emprunté.
+     * @param numA Le numéro de l'adherent à supprimer.
+     */
     public void desinscriptionAdh(String numA){
         if(!numA.equals("") && hmAdherents.get(numA)!=null){
             if(hmAdherents.get(numA).getLivresEmpruntes().size() == 0){
@@ -171,6 +298,10 @@ public class Controller extends Observable {
     }
 
 
+    /**
+     * Affiche un message d'erreur en fonction du code reçu
+     * @param code Le code de l'erreur
+     */
     private void errorMessage(String code){
         final JPanel panel = new JPanel();
         String mess;
@@ -200,12 +331,16 @@ public class Controller extends Observable {
                 mess = "Veuillez rendre tous les livres avant de vous désinscrire.";
                 break;
             default :
-                mess = "Erreur de segmentation ;p";
+                mess = "Erreur inconnue au bataillon";
                 break;
         }
 
         JOptionPane.showMessageDialog(panel, mess, "Error", JOptionPane.ERROR_MESSAGE);
     }
+
+    public HashMap<String, Livre> getHmLivres(){ return this.hmLivres; }
+
+    public HashMap<String, Adherent> getHmAdherent(){ return this.hmAdherents; }
 
 
 }

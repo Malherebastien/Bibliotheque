@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * La classe représentant un livre de la collection de la bibliothèque.
  * @author Bastien Malhere
- * @version 1.0
+ * @version 3.0
  * @since 1.0
  * @see Auteur
  */

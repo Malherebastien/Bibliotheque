@@ -1,3 +1,10 @@
+/**
+ * La vue de l'interface graphique, elle s'inscrit dans le pattern MVC
+ * @author Bastien Malhere, Gabin Pruvost-Couvreur
+ * @version 3.0
+ * @since 3.0
+ * @see Controller
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

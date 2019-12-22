@@ -8,7 +8,6 @@ public class Secretaire extends Personnel implements Personne {
     private final int MONTANT_COT = 20;
     /**
      * Le constructeur de la classe personnel
-     *
      * @param nom    Son nom
      * @param prenom Son prenom
      * @param age    Son age

@@ -1,7 +1,7 @@
 /**
  * Un SansEmploi. Il hérite d'Adherent et une méthode inscrire() différente
  * @author Bastien Malhere
- * @version 1.0
+ * @version 3.0
  * @since 1.0
  * @see Adherent
  * @see Adresse

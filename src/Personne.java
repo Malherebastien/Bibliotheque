@@ -5,5 +5,9 @@
  * @since 2.0
  */
 public interface Personne {
+    /**
+     * Calcul les couts d'inscription pour une Personne
+     * @return le cout
+     */
     int calculerCot();
 }

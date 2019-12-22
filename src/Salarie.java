@@ -1,7 +1,7 @@
 /**
  * Un Salarié. Il hérite d'Adherent, et à un salaire brut et une méthode inscrire() différente
  * @author Bastien Malhere
- * @version 2.0
+ * @version 3.0
  * @since 1.0
  * @see Adherent
  * @see Adresse
