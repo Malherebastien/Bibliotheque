@@ -30,6 +30,8 @@ public class Controller extends Observable {
 
     }
 
+    public HashMap<String, Livre> getHmLivres(){ return this.hmLivres; }
+
     public void addLivre(String titre, Auteur auteur, String editeur, String anneeEdition){
         String ref = "L" + (hmLivres.size() + 1);
         hmLivres.put(ref, new Livre(titre, auteur, editeur, Integer.parseInt(anneeEdition)));

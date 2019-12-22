@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -465,7 +466,12 @@ public class View {
         }
 
         JPanel pListeLivres = new JPanel();{
+            JScrollPane pLL_1 = new JScrollPane();{
+                HashMap<String, Livre> hml = model.getHmLivres();
+                String entete[] = {"Titre", "Auteur(s)", "Editeur", "Année édition", "Disponibilité"};
 
+
+            }
         }
 
         JPanel pDesinscription = new JPanel();{
@@ -498,7 +504,9 @@ public class View {
         }
 
         JPanel pListeUtilisateurs = new JPanel(); {
+            JScrollPane pLU_1 = new JScrollPane();{
 
+            }
         }
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -566,9 +574,7 @@ public class View {
                 pInsI_2.add(pInsI_2_6);
             }
 
-            JPanel pInsI_3 = new JPanel(new FlowLayout());
-
-            {
+            JPanel pInsI_3 = new JPanel(new FlowLayout()); {
                 pInsI_3.add(this.bValiderSupAdherent);
             }
 
