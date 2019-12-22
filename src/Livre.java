@@ -77,6 +77,14 @@ public class Livre {
         return auteurs;
     }
 
+    public String getAuteursString() {
+        String sRet = "";
+        for(Auteur a :auteurs) {
+            sRet = sRet + a.getPrenom() + " " + a.getNom() + ", ";
+        }
+        return sRet;
+    }
+
     public void setAuteurs(ArrayList<Auteur> auteurs) {
         this.auteurs = auteurs;
     }

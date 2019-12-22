@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -76,17 +77,22 @@ public class View {
 
     public View() {
         createModel();
-        createView();
-        placeComponents();
-        createController();
 
-        model.addAdherent("Pruvost---Couvreur", "Gabin", new Adresse(), "1234", "0000000000", "Etudiant");
+        model.addAdherent("Pruvost---Couvreur", "Gabin", new Adresse("rue du cafard", 13, "Dépression", 666
+        ), "1234", "0000000000", "Etudiant");
         model.addAdherent("Malherbe", "Bastien", new Adresse(), "4321", "111111111111", "Etudiant");
         model.addAdherent("Duvalon", "Paul", new Adresse(), "1111", "2222222222", "Salarié");
         model.addAdherent("Levesque", "Paulinette", new Adresse(), "1000000", "3333333333", "Salarié");
 
         model.addLivre("20 milieux sous la Terre", new Auteur("Julien", "Verni"), "La marmotte de milka", "1984");
         model.addLivre("Le bleu du ciel", new Auteur("Un", "oiseau"), "Les aut' oiseaux", "2015");
+
+
+        createView();
+        placeComponents();
+        createController();
+
+
     }
 
 
@@ -351,6 +357,7 @@ public class View {
             pIns.add(pIns_2, BorderLayout.CENTER);
             pIns.add(pIns_3, BorderLayout.SOUTH);
         }
+
         JPanel pEmprunt = new JPanel(new BorderLayout());{
             JPanel pe_1 = new JPanel(new FlowLayout());{
                 pe_1.add(new JLabel("Formulaire d'Emprunt"));
@@ -429,6 +436,7 @@ public class View {
             pEmprunt.add(pe_2, BorderLayout.CENTER);
             pEmprunt.add(pe_3, BorderLayout.SOUTH);
         }
+
         JPanel pDepot = new JPanel(new BorderLayout());{
             JPanel pde_1 = new JPanel(new FlowLayout());{
                 pde_1.add(new JLabel("Formulaire de dépot"));
@@ -465,51 +473,84 @@ public class View {
             pDepot.add(pde_3, BorderLayout.SOUTH);
         }
 
-        JPanel pListeLivres = new JPanel();{
-            JScrollPane pLL_1 = new JScrollPane();{
-                HashMap<String, Livre> hml = model.getHmLivres();
-                String entete[] = {"Titre", "Auteur(s)", "Editeur", "Année édition", "Disponibilité"};
+        JPanel pListeLivres = new JPanel(new BorderLayout());{
 
+            HashMap<String, Livre> hml = model.getHmLivres();
+            String entete[] = {"Titre", "Auteur(s)", "Editeur", "Année édition", "Disponibilité"};
+            int s = hml.size();
+            Object[][] tab = new Object[s][5];
 
+            Collection<Livre> c = hml.values();
+
+            int i = 0;
+            for (Livre l : c){
+                tab[i][0] = l.getTitre();
+                tab[i][1] = l.getAuteursString();
+                tab[i][2] = l.getEditeur();
+                tab[i][3] = l.getAnneeEdition();
+                tab[i][4] = l.isEstDisponible();
+                i ++;
             }
+
+            JTable jtbl = new JTable(tab, entete);
+            JScrollPane pLL_1 = new JScrollPane(jtbl);
+
+            pListeLivres.add(pLL_1, BorderLayout.CENTER);
         }
 
-        JPanel pDesinscription = new JPanel();{
-            JPanel pSuppL_1 = new JPanel();{
+        JPanel pDesinscription = new JPanel(new BorderLayout());{
+            JPanel pSuppA_1 = new JPanel();{
                 JLabel jlTop = new JLabel("Desinscription d'utilisateur");
                 jlTop.setFont(new Font("Arial", Font.BOLD, 16));
-                pSuppL_1.add(jlTop);
+                pSuppA_1.add(jlTop);
             }
-            JPanel pSuppL_2 = new JPanel(new GridLayout(1, 2));{
-                JPanel pSuppL_2_1 = new JPanel(new FlowLayout());
+            JPanel pSuppA_2 = new JPanel(new GridLayout(1, 2));{
+                JPanel pSuppA_2_1 = new JPanel(new FlowLayout());
                 {
-                    pSuppL_2_1.add(new JLabel("Référence d'utilisateur : "), BorderLayout.EAST);
+                    pSuppA_2_1.add(new JLabel("Référence d'utilisateur : "), BorderLayout.EAST);
                 }
-                JPanel pSuppL_2_2 = new JPanel(new FlowLayout());
+                JPanel pSuppA_2_2 = new JPanel(new FlowLayout());
                 {
-                    pSuppL_2_2.add(this.tfNumSupp);
+                    pSuppA_2_2.add(this.tfNumSupp);
                 }
 
-                pSuppL_2.add(pSuppL_2_1);
-                pSuppL_2.add(pSuppL_2_2);
-            }
-            JPanel pSuppL_3 = new JPanel(new FlowLayout());
-            {
-                pSuppL_3.add(this.bValiderSupAdherent);
+                pSuppA_2.add(pSuppA_2_1);
+                pSuppA_2.add(pSuppA_2_2);
             }
 
-            pDesinscription.add(pSuppL_1, BorderLayout.NORTH);
-            pDesinscription.add(pSuppL_2, BorderLayout.CENTER);
-            pDesinscription.add(pSuppL_3, BorderLayout.SOUTH);
+            JPanel pSuppA_3 = new JPanel();{
+                pSuppA_3.add(this.bValiderSupAdherent);
+            }
+
+            pDesinscription.add(pSuppA_1, BorderLayout.NORTH);
+            pDesinscription.add(pSuppA_2, BorderLayout.CENTER);
+            pDesinscription.add(pSuppA_3, BorderLayout.SOUTH);
         }
 
-        JPanel pListeUtilisateurs = new JPanel(); {
-            JScrollPane pLU_1 = new JScrollPane();{
+        JPanel pListeUtilisateurs = new JPanel(new BorderLayout()); {
+            HashMap<String, Adherent> hma = model.getHmAdherent();
+            String entete[] = {"Nom", "Prenom", "Adresse", "Téléphone"};
+            int s = hma.size();
+            Object[][] tab = new Object[s][4];
 
+            Collection<Adherent> c = hma.values();
+
+            int i = 0;
+            for (Adherent a : c){
+                tab[i][0] = a.getNom();
+                tab[i][1] = a.getPrenom();
+                tab[i][2] = a.getAdresse().getAdresseString();
+                tab[i][3] = a.getTelephone();
+                i ++;
             }
+
+            JTable jtbl = new JTable(tab, entete);
+
+            JScrollPane pLA_1 = new JScrollPane(jtbl);
+
+            pListeUtilisateurs.add(pLA_1, BorderLayout.CENTER);
         }
 
-        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         JPanel pInscriptionInterne = new JPanel(); {
             JPanel pInsI_1 = new JPanel(new GridLayout(2, 1));
             {
@@ -575,7 +616,7 @@ public class View {
             }
 
             JPanel pInsI_3 = new JPanel(new FlowLayout()); {
-                pInsI_3.add(this.bValiderSupAdherent);
+                pInsI_3.add(this.bValiderInsInterne);
             }
 
             pInscriptionInterne.add(pInsI_1, BorderLayout.NORTH);

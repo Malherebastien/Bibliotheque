@@ -93,4 +93,8 @@ public class Adresse {
     public void setCodePostal(int codePostal) {
         this.codePostal = codePostal;
     }
+
+    public String getAdresseString() {
+        return getNumDeRue() + " " + getRue() + ", " + getCodePostal() + " - " + getVille();
+    }
 }
