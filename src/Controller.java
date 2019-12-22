@@ -67,6 +67,7 @@ public class Controller extends Observable {
         createJPanel(prenom, ref);
     }
 
+
     /**
      * Ajoute un personnel Directeur
      * @param nom Nom du personnel
