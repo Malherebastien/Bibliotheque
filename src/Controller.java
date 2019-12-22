@@ -46,7 +46,7 @@ public class Controller extends Observable {
      * @param salaireBrut Le numéro de l'étudiant
      * @param tel Le téléphone de l'etudiant
      */
-    public void addSalarie(String nom, String prenom, Adresse adresse, String salaireBrut, String tel, String statut){
+    public void addSalarie(String nom, String prenom, Adresse adresse, String salaireBrut, String tel){
         String ref = "A" + String.format("%05d", hmAdherents.size() + 1);
         hmAdherents.put(ref, new Salarie(nom, prenom, adresse, tel, Integer.parseInt(salaireBrut)));
 
@@ -60,7 +60,7 @@ public class Controller extends Observable {
      * @param adresse Adresse du sans-emploi
      * @param tel Le téléphone du sans-emploi
      */
-    public void addSansEmploi(String nom, String prenom, Adresse adresse, String numESal, String tel, String statut){
+    public void addSansEmploi(String nom, String prenom, Adresse adresse, String tel){
         String ref = "A" + String.format("%05d", hmAdherents.size() + 1);
         hmAdherents.put(ref, new SansEmploi(nom, prenom, adresse, tel));
 
@@ -73,9 +73,9 @@ public class Controller extends Observable {
      * @param prenom Prenom du personnel
      * @param age Age du personnel
      */
-    public void addDirecteur(String nom, String prenom, int age) {
-        String ref = "A" + String.format("%05d", hmPersonnel.size() + 1);
-        hmPersonnel.put(ref, new Directeur(nom, prenom, age));
+    public void addDirecteur(String nom, String prenom, String age) {
+        String ref = "I" + String.format("%05d", hmPersonnel.size() + 1);
+        hmPersonnel.put(ref, new Directeur(nom, prenom, Integer.parseInt(age)));
 
         createJPanel(prenom, ref);
     }
@@ -86,9 +86,9 @@ public class Controller extends Observable {
      * @param prenom Prenom du personnel
      * @param age Age du personnel
      */
-    public void addSecretaire(String nom, String prenom, int age) {
-        String ref = "A" + String.format("%05d", hmPersonnel.size() + 1);
-        hmPersonnel.put(ref, new Secretaire(nom, prenom, age));
+    public void addSecretaire(String nom, String prenom, String age) {
+        String ref = "I" + String.format("%05d", hmPersonnel.size() + 1);
+        hmPersonnel.put(ref, new Secretaire(nom, prenom, Integer.parseInt(age)));
 
         createJPanel(prenom, ref);
     }
@@ -99,9 +99,9 @@ public class Controller extends Observable {
      * @param prenom Prenom du personnel
      * @param age Age du personnel
      */
-    public void addBibliothecaire(String nom, String prenom, int age) {
-        String ref = "A" + String.format("%05d", hmPersonnel.size() + 1);
-        hmPersonnel.put(ref, new Bibliothecaire(nom, prenom, age));
+    public void addBibliothecaire(String nom, String prenom, String age) {
+        String ref = "I" + String.format("%05d", hmPersonnel.size() + 1);
+        hmPersonnel.put(ref, new Bibliothecaire(nom, prenom, Integer.parseInt(age)));
 
         createJPanel(prenom, ref);
     }

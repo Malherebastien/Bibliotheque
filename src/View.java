@@ -85,21 +85,17 @@ public class View {
     public View() {
         createModel();
 
-        model.addAdherent("Pruvost---Couvreur", "Gabin", new Adresse("rue du cafard", 13, "Dépression", 666
-        ), "1234", "0000000000", "Etudiant");
-        model.addAdherent("Malherbe", "Bastien", new Adresse(), "4321", "111111111111", "Etudiant");
-        model.addAdherent("Duvalon", "Paul", new Adresse(), "1111", "2222222222", "Salarié");
-        model.addAdherent("Levesque", "Paulinette", new Adresse(), "1000000", "3333333333", "Salarié");
+        model.addEtudiant("Pruvost---Couvreur", "Gabin", new Adresse("rue du cafard", 13, "Dépression", 666), "1234", "0000000000");
+        model.addEtudiant("Malherbe", "Bastien", new Adresse(), "4321", "111111111111");
+        model.addSalarie("Duvalon", "Paul", new Adresse(), "1111", "2222222222");
+        model.addSalarie("Levesque", "Paulinette", new Adresse(), "1000000", "3333333333");
 
         model.addLivre("20 milieux sous la Terre", new Auteur("Julien", "Verni"), "La marmotte de milka", "1984");
         model.addLivre("Le bleu du ciel", new Auteur("Un", "oiseau"), "Les aut' oiseaux", "2015");
 
-
         createView();
         placeComponents();
         createController();
-
-
     }
 
 
@@ -698,9 +694,29 @@ public class View {
         bValiderAjoutAdherent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    model.addAdherent(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText(), cbgStatut.getSelectedCheckbox().getLabel());
+                if (cbgStatut.getSelectedCheckbox().getLabel().equals("Etudiant")) {
+                    model.addEtudiant(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
+                } else if(cbgStatut.getSelectedCheckbox().getLabel().equals("Salarié") ){
+                    model.addSalarie(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
+                } else if(cbgStatut.getSelectedCheckbox().getLabel().equals("Sans emploi")) {
+                    model.addSansEmploi(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText());
+                }
             }
         });
+
+        bValiderInsInterne.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (cbgStatutI.getSelectedCheckbox().getLabel().equals("Directeur")) {
+                    model.addDirecteur(tfInsINom.getText(), tfInsIPrenom.getText(), tfInsIAge.getText());
+                } else if(cbgStatutI.getSelectedCheckbox().getLabel().equals("Bibliothécaire") ){
+                    model.addBibliothecaire(tfInsINom.getText(), tfInsIPrenom.getText(), tfInsIAge.getText());
+                } else if(cbgStatutI.getSelectedCheckbox().getLabel().equals("Secrétaire")) {
+                    model.addSecretaire(tfInsINom.getText(), tfInsIPrenom.getText(), tfInsIAge.getText());
+                }
+            }
+        });
+
         bValiderEmprunt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
