@@ -794,6 +794,10 @@ public class View {
         });
     }
 
+    /**
+     * Change le panel en fonction du bouton pressé.
+     * @param i le numéro du panel à afficher
+     */
     private void switchTable(int i){
         for (int j = 1; j < 9; j++){
             if (i != j) jtp.setEnabledAt(j, false);
@@ -802,13 +806,16 @@ public class View {
         jtp.setSelectedIndex(i);
     }
 
+    /**
+     * Méthode peu utile dans le cas présent, car le modèle n'a rien à rafraichir. Cependant, cela pourrait être utile dans le futur, d'où sa présence
+     */
     private void refresh() {
         //set le text avec les méthodes du model
     }
 
     /**
      * Point d'entrée du programme
-     * @param args
+     * @param args les arguments données à la JVM. Inutile ici
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
