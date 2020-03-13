@@ -17,7 +17,7 @@ import java.util.Observer;
 public class View {
 
     private JFrame mainFrame;
-    private Controller model;
+    private Controller controller;
     private JTabbedPane jtp;
 
     //Page Accueil
@@ -78,24 +78,31 @@ public class View {
     private JTextField tfDepotLRef;
     private JButton bValiderRendu;
 
+    //Aff livre / Aff Adherent
+    JTable jtbl;
+    JTable jtblA;
+
     private JButton bTrier;
     private JComboBox<String> cbTrier;
 
 
-    public View() {
-        createModel();
+    public View(Controller ctrl) {
 
-        model.addEtudiant("Pruvost---Couvreur", "Gabin", new Adresse("rue du cafard", 13, "Dépression", 666), "1234", "0000000000");
-        model.addEtudiant("Malherbe", "Bastien", new Adresse(), "4321", "111111111111");
-        model.addSalarie("Duvalon", "Paul", new Adresse(), "1111", "2222222222");
-        model.addSalarie("Levesque", "Paulinette", new Adresse(), "1000000", "3333333333");
 
-        model.addLivre("20 milieux sous la Terre", new Auteur("Julien", "Verni"), "La marmotte de milka", "1984");
-        model.addLivre("Le bleu du ciel", new Auteur("Un", "oiseau"), "Les aut' oiseaux", "2015");
+        this.controller = ctrl;
+        controller.addEtudiant("Pruvost---Couvreur", "Gabin", new Adresse("rue du cafard", 13, "Dépression", 666), "1234", "0000000000");
+        controller.addEtudiant("Malherbe", "Bastien", new Adresse(), "4321", "111111111111");
+        controller.addSalarie("Duvalon", "Paul", new Adresse(), "1111", "2222222222");
+        controller.addSalarie("Levesque", "Paulinette", new Adresse(), "1000000", "3333333333");
+
+        controller.addLivre("20 milieux sous la Terre", new Auteur("Julien", "Verni"), "La marmotte de milka", "1984");
+        controller.addLivre("Le bleu du ciel", new Auteur("Un", "oiseau"), "Les aut' oiseaux", "2015");
 
         createView();
         placeComponents();
-        createController();
+        createListener();
+
+        this.display();
     }
 
 
@@ -107,13 +114,6 @@ public class View {
         mainFrame.pack();
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
-    }
-
-    /**
-     * Initialise le model
-     */
-    private void createModel() {
-        model = new Controller();
     }
 
     /**
@@ -478,7 +478,7 @@ public class View {
 
         JPanel pListeLivres = new JPanel(new BorderLayout());{
 
-            HashMap<String, Livre> hml = model.getHmLivres();
+            HashMap<String, Livre> hml = controller.getHmLivres();
             String entete[] = {"Titre", "Auteur(s)", "Editeur", "Année édition", "Disponibilité"};
             int s = hml.size();
             Object[][] tab = new Object[s][5];
@@ -495,8 +495,8 @@ public class View {
                 i ++;
             }
 
-            JTable jtbl = new JTable(tab, entete);
-            JScrollPane pLL_1 = new JScrollPane(jtbl);
+            this.jtbl = new JTable(tab, entete);
+            JScrollPane pLL_1 = new JScrollPane(this.jtbl);
 
             pListeLivres.add(pLL_1, BorderLayout.CENTER);
         }
@@ -531,7 +531,8 @@ public class View {
         }
 
         JPanel pListeUtilisateurs = new JPanel(new BorderLayout()); {
-            HashMap<String, Adherent> hma = model.getHmAdherent();
+            HashMap<String, Adherent> hma = controller.getHmAdherent();
+            System.out.println(hma.size());
             String entete[] = {"Nom", "Prenom", "Adresse", "Téléphone"};
             int s = hma.size();
             Object[][] tab = new Object[s][4];
@@ -547,9 +548,9 @@ public class View {
                 i ++;
             }
 
-            JTable jtbl = new JTable(tab, entete);
+            this.jtblA = new JTable(tab, entete);
 
-            JScrollPane pLA_1 = new JScrollPane(jtbl);
+            JScrollPane pLA_1 = new JScrollPane(jtblA);
 
             pListeUtilisateurs.add(pLA_1, BorderLayout.CENTER);
         }
@@ -681,10 +682,10 @@ public class View {
     /**
      * Création des observers pour les différents composants
      */
-    private void createController() {
+    private void createListener() {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        model.addObserver(new Observer() {
+        controller.addObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
                 refresh();
@@ -695,12 +696,13 @@ public class View {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (cbgStatut.getSelectedCheckbox().getLabel().equals("Etudiant")) {
-                    model.addEtudiant(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
+                    controller.addEtudiant(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
                 } else if(cbgStatut.getSelectedCheckbox().getLabel().equals("Salarié") ){
-                    model.addSalarie(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
+                    controller.addSalarie(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText(), tfInsNumEtuSal.getText());
                 } else if(cbgStatut.getSelectedCheckbox().getLabel().equals("Sans emploi")) {
-                    model.addSansEmploi(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText());
+                    controller.addSansEmploi(tfInsNom.getText(), tfInsPrenom.getText(), new Adresse(tfInsRue.getText(), Integer.parseInt(tfInsNumRue.getText()), tfInsVille.getText(), Integer.parseInt(tfInsCodePostal.getText())), tfInsTel.getText());
                 }
+                refresh();
             }
         });
 
@@ -708,38 +710,40 @@ public class View {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (cbgStatutI.getSelectedCheckbox().getLabel().equals("Directeur")) {
-                    model.addDirecteur(tfInsINom.getText(), tfInsIPrenom.getText(), tfInsIAge.getText());
+                    controller.addDirecteur(tfInsINom.getText(), tfInsIPrenom.getText(), tfInsIAge.getText());
                 } else if(cbgStatutI.getSelectedCheckbox().getLabel().equals("Bibliothécaire") ){
-                    model.addBibliothecaire(tfInsINom.getText(), tfInsIPrenom.getText(), tfInsIAge.getText());
+                    controller.addBibliothecaire(tfInsINom.getText(), tfInsIPrenom.getText(), tfInsIAge.getText());
                 } else if(cbgStatutI.getSelectedCheckbox().getLabel().equals("Secrétaire")) {
-                    model.addSecretaire(tfInsINom.getText(), tfInsIPrenom.getText(), tfInsIAge.getText());
+                    controller.addSecretaire(tfInsINom.getText(), tfInsIPrenom.getText(), tfInsIAge.getText());
                 }
+                refresh();
             }
         });
 
         bValiderEmprunt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.demandeEmprunt(tfEmpARef.getText(), tfEmpLRef.getText(), tfEmpLTitre.getText(),
+                controller.demandeEmprunt(tfEmpARef.getText(), tfEmpLRef.getText(), tfEmpLTitre.getText(),
                         tfEmpLAuteur.getText(), tfEmpLEditeur.getText(), tfEmpLAnneeEdition.getText());
             }
+
         });
         bValiderRendu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.deposerLivre(tfDepotARef.getText(), tfDepotLRef.getText());
+                controller.deposerLivre(tfDepotARef.getText(), tfDepotLRef.getText());
             }
         });
         bValiderSupLivre.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.suppLivre(tfRefSupp.getText());
+                controller.suppLivre(tfRefSupp.getText());
             }
         });
         bValiderSupAdherent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.desinscriptionAdh(tfNumSupp.getText());
+                controller.desinscriptionAdh(tfNumSupp.getText());
             }
         });
 
@@ -766,6 +770,7 @@ public class View {
             @Override
             public void actionPerformed(ActionEvent e) {
                switchTable(4);
+               refresh();
             }
         });
         bAccDesinscription.addActionListener(new ActionListener() {
@@ -778,6 +783,7 @@ public class View {
             @Override
             public void actionPerformed(ActionEvent e) {
                 switchTable(6);
+                refresh();
             }
         });
         bAccInscriptionInterne.addActionListener(new ActionListener() {
@@ -810,19 +816,8 @@ public class View {
      * Méthode peu utile dans le cas présent, car le modèle n'a rien à rafraichir. Cependant, cela pourrait être utile dans le futur, d'où sa présence
      */
     private void refresh() {
-        //set le text avec les méthodes du model
+        this.jtbl.repaint();
+        this.jtblA.repaint();
     }
 
-    /**
-     * Point d'entrée du programme
-     * @param args les arguments données à la JVM. Inutile ici
-     */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new View().display();
-            }
-        });
-    }
 }

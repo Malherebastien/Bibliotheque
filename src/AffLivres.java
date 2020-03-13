@@ -17,7 +17,7 @@ public class AffLivres {
 
     private JFrame listFrame;
     private ArrayList<Livre> alLivre;
-    private Controller controller;
+    private Modele model;
     private String refAdherent;
     private JButton bVal;
     private JButton bAnnul;
@@ -26,12 +26,12 @@ public class AffLivres {
     /**
      * Constructeur de l'afficheur de livres
      * @param al la liste de tout les livres
-     * @param ctrler Le controleur de l'application
+     * @param model Le modele de l'application
      * @param refA La référence de l'adherent qui fais la recherche
      */
-    public AffLivres(ArrayList<Livre> al, Controller ctrler, String refA){
+    public AffLivres(ArrayList<Livre> al, Modele model, String refA){
         this.alLivre = al;
-        this.controller = ctrler;
+        this.model = model;
         this.refAdherent = refA;
 
         createView();
@@ -86,7 +86,7 @@ public class AffLivres {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("--> " + alLivre.get(liste.getSelectedIndex()).getRefLivre());
-                controller.empruntRefRef(alLivre.get(liste.getSelectedIndex()).getRefLivre(), refAdherent);
+                model.empruntRefRef(alLivre.get(liste.getSelectedIndex()).getRefLivre(), refAdherent);
                 listFrame.dispose();
             }
         });
